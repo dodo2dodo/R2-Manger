@@ -18,8 +18,13 @@ jobs:
       matrix:
         include:
           - platform: 'macos-latest'
+            target: 'aarch64-apple-darwin'
             args: '--target aarch64-apple-darwin --ignore-version-mismatches'
+          - platform: 'macos-latest'
+            target: 'x86_64-apple-darwin'
+            args: '--target x86_64-apple-darwin --ignore-version-mismatches'
           - platform: 'windows-latest'
+            target: ''
             args: '--ignore-version-mismatches'
 
     runs-on: ${{ matrix.platform }}
@@ -36,7 +41,7 @@ jobs:
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
         with:
-          targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin' || '' }}
+          targets: ${{ matrix.target }}
 
       - name: Install dependencies
         run: npm install
@@ -48,7 +53,16 @@ jobs:
         with:
           tagName: ${{ github.ref_name }}
           releaseName: 'R2 Manager ${{ github.ref_name }}'
-          releaseBody: '自动化构建发布。请在下方 Assets 区域选择对应系统的安装包下载。'
+          releaseBody: |
+            ### 安装包下载指南 (Assets)
+
+            | 操作系统 / 架构 | 推荐安装包 | 适用机型 |
+            | :--- | :--- | :--- |
+            | **macOS (Apple Silicon)** | `*aarch64.dmg` | 适用于 Apple M1 / M2 / M3 / M4 芯片 |
+            | **macOS (Intel)** | `*x64.dmg` | 适用于 Intel 处理器款 Mac |
+            | **Windows (64-bit)** | `*x64-setup.exe` | 适用于 Windows 10 / 11 |
+
+            > **macOS 安装提示**：由于未购买商业开发者证书，首次打开若提示“无法验证开发者”，请前往系统「设置 -> 隐私与安全性」底部点击「仍要打开」即可正常使用。
           releaseDraft: false
           prerelease: false
           args: ${{ matrix.args }}
