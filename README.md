@@ -7,6 +7,10 @@
 [![Rust](https://img.shields.io/badge/Rust-2021-orange?logo=rust&logoColor=white)](https://www.rust-lang.org/)
 [![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)](https://react.dev/)
 
+<p align="center">
+  <img src="assets/preview.png" alt="R2 Manager 界面预览" width="860" />
+</p>
+
 ---
 
 ## 特性亮点
