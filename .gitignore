@@ -7,3 +7,4 @@ src-tauri/gen
 /app-icon.png
 /cleaned-icon.png
 website/
+!package-lock.json
